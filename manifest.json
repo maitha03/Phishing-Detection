@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Phishing Detector",
+  "version": "0.1.0",
+  "description": "Warns you about suspicious websites.",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
