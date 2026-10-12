@@ -49,26 +49,33 @@ function checkUrl(urlString) {
   }
 
   const score = findings.reduce((total, f) => total + f.weight, 0);
-  return { score, reasons: findings.map((f) => f.reason) };
+  return { score, findings };
 }
 
-// Shows a warning banner at the top of the page
-function showWarning(reasons) {
+// Shows a warning banner at the top of the page, including the score
+function showWarning(score, findings) {
   const banner = document.createElement("div");
   banner.style.cssText =
     "position:fixed;top:0;left:0;right:0;z-index:2147483647;" +
     "background:#b00020;color:#fff;padding:12px 16px;" +
     "font:14px Arial,sans-serif;";
+
+  const items = findings
+    .map((f) => `<li>${f.reason} <em>(+${f.weight})</em></li>`)
+    .join("");
+
   banner.innerHTML =
-    "<strong>Warning: this page looks suspicious</strong><ul style='margin:6px 0 0 18px'>" +
-    reasons.map((r) => `<li>${r}</li>`).join("") +
-    "</ul>";
+    "<strong>Warning: this page looks suspicious</strong>" +
+    `<div style='margin-top:4px'>Risk score: <strong>${score}</strong> ` +
+    `(warning threshold: ${WARNING_THRESHOLD})</div>` +
+    `<ul style='margin:6px 0 0 18px'>${items}</ul>`;
+
   document.body.prepend(banner);
 }
 
 // Run the check on the current page
 const result = checkUrl(window.location.href);
-console.log("Phishing Detector score:", result.score, result.reasons);
+console.log("Phishing Detector score:", result.score, result.findings);
 if (result.score >= WARNING_THRESHOLD) {
-  showWarning(result.reasons);
+  showWarning(result.score, result.findings);
 }
