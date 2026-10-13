@@ -82,7 +82,7 @@ Tech
 JavaScript (ES2020), Chrome Extension Manifest V3. No external dependencies.
 Author
  **Maythaa Almukhaini** - Cybersecurity & Machine Learning Developer
- **GitHub:**  @maitha03 (https://github.com/yourusername)
+ **GitHub:**  @maitha03 (https://github.com/maitha03)
  **LinkedIn:** [Maithaa Almukhaini](https://linkedin.com/in/Maithaa Almukhaini)
  **Email:** maythaalmukaini@example.com
 
