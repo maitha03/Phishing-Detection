@@ -11,6 +11,7 @@ const USER_ALLOWLIST = []; // sites you always trust, e.g. ["myuniversity.edu"]
 
 // Brands that phishers imitate, with their real domains
 const BRANDS = {
+  // ---- Big tech & social ----
   paypal: ["paypal.com", "paypal.me"],
   google: ["google.com", "gmail.com", "youtube.com", "googleapis.com", "gstatic.com", "googleusercontent.com"],
   microsoft: ["microsoft.com", "microsoftonline.com", "live.com", "office.com", "office365.com", "outlook.com", "bing.com", "windows.com", "azure.com", "sharepoint.com", "msn.com"],
@@ -27,18 +28,112 @@ const BRANDS = {
   dropbox: ["dropbox.com"],
   adobe: ["adobe.com"],
   docusign: ["docusign.com", "docusign.net"],
-  coinbase: ["coinbase.com"],
-  binance: ["binance.com"],
   ebay: ["ebay.com"],
   yahoo: ["yahoo.com"],
   telegram: ["telegram.org", "t.me"],
   discord: ["discord.com", "discord.gg"],
   steam: ["steampowered.com", "steamcommunity.com"],
+  tiktok: ["tiktok.com"],
+  snapchat: ["snapchat.com"],
+  pinterest: ["pinterest.com"],
+  reddit: ["reddit.com", "redd.it"],
+  zoom: ["zoom.us", "zoom.com"],
+  slack: ["slack.com"],
+  skype: ["skype.com"],
+  openai: ["openai.com", "chatgpt.com"],
+  chatgpt: ["chatgpt.com"],
+
+  // ---- Banks & payments ----
   chase: ["chase.com"],
   wellsfargo: ["wellsfargo.com"],
   bankofamerica: ["bankofamerica.com"],
-  hsbc: ["hsbc.com"],
+  hsbc: ["hsbc.com", "hsbc.co.uk"],
+  citibank: ["citibank.com", "citi.com"],
+  capitalone: ["capitalone.com"],
+  usbank: ["usbank.com"],
+  barclays: ["barclays.com", "barclays.co.uk"],
+  lloyds: ["lloydsbank.com"],
+  santander: ["santander.com"],
+  standardchartered: ["sc.com", "standardchartered.com"],
+  americanexpress: ["americanexpress.com"],
+  mastercard: ["mastercard.com"],
+  stripe: ["stripe.com"],
+  venmo: ["venmo.com"],
+  cashapp: ["cash.app"],
+  zelle: ["zellepay.com"],
+  revolut: ["revolut.com"],
+  klarna: ["klarna.com"],
+  payoneer: ["payoneer.com"],
+  westernunion: ["westernunion.com"],
+
+  // ---- Crypto ----
+  coinbase: ["coinbase.com"],
+  binance: ["binance.com"],
+  metamask: ["metamask.io"],
+  trustwallet: ["trustwallet.com"],
+  kraken: ["kraken.com"],
+  kucoin: ["kucoin.com"],
+  bybit: ["bybit.com"],
+  opensea: ["opensea.io"],
+  uniswap: ["uniswap.org"],
+  trezor: ["trezor.io"],
+  blockchain: ["blockchain.com"],
+  robinhood: ["robinhood.com"],
+
+  // ---- Shopping, delivery & travel ----
   fedex: ["fedex.com"],
+  usps: ["usps.com"],
+  royalmail: ["royalmail.com"],
+  aramex: ["aramex.com"],
+  shopify: ["shopify.com", "myshopify.com"],
+  aliexpress: ["aliexpress.com"],
+  alibaba: ["alibaba.com"],
+  walmart: ["walmart.com"],
+  airbnb: ["airbnb.com"],
+  expedia: ["expedia.com"],
+  tripadvisor: ["tripadvisor.com"],
+
+  // ---- Gaming & streaming ----
+  twitch: ["twitch.tv"],
+  roblox: ["roblox.com"],
+  epicgames: ["epicgames.com"],
+  playstation: ["playstation.com"],
+  xbox: ["xbox.com"],
+  nintendo: ["nintendo.com"],
+  disney: ["disneyplus.com", "disney.com"],
+  hulu: ["hulu.com"],
+
+  // ---- Cloud, software & security ----
+  cloudflare: ["cloudflare.com"],
+  godaddy: ["godaddy.com"],
+  namecheap: ["namecheap.com"],
+  wordpress: ["wordpress.com", "wordpress.org"],
+  wetransfer: ["wetransfer.com"],
+  mailchimp: ["mailchimp.com"],
+  salesforce: ["salesforce.com", "force.com"],
+  lastpass: ["lastpass.com"],
+  proton: ["proton.me", "protonmail.com"],
+  norton: ["norton.com"],
+  mcafee: ["mcafee.com"],
+  zoho: ["zoho.com"],
+
+  // ---- Telecom ----
+  verizon: ["verizon.com"],
+  vodafone: ["vodafone.com"],
+  tmobile: ["t-mobile.com", "tmobile.com"],
+  etisalat: ["etisalat.ae"],
+
+  // ---- Gulf region ----
+  emirates: ["emirates.com"],
+  etihad: ["etihad.com"],
+  careem: ["careem.com"],
+  talabat: ["talabat.com"],
+  mashreq: ["mashreq.com", "mashreqbank.com"],
+  emiratesnbd: ["emiratesnbd.com"],
+  alrajhi: ["alrajhibank.com.sa"],
+  stcpay: ["stcpay.com.sa"],
+  bankmuscat: ["bankmuscat.com"],
+  omantel: ["omantel.om"],
 };
 
 // Every real brand domain is trusted (plus your own allowlist)
@@ -436,10 +531,16 @@ function showWarning(score, findings) {
     "color:#fff;font:14px Arial,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,.4);" +
     `background:${high ? "#b00020" : "#c75000"};`;
 
-  const title = document.createElement("strong");
+    const title = document.createElement("strong");
   title.textContent = high
-    ? "High risk: this page shows strong signs of phishing"
-    : "Caution: this page looks suspicious";
+    ? "LinkSentry - High risk: this page shows strong signs of phishing"
+    : "LinkSentry - Caution: this page looks suspicious";
+
+  const logo = document.createElement("img");
+  logo.src = chrome.runtime.getURL("icons/icon48.png");
+  logo.alt = "LinkSentry";
+  logo.style.cssText = "width:22px;height:22px;vertical-align:middle;margin-right:8px;";
+  title.prepend(logo);;
 
   const scoreLine = document.createElement("div");
   scoreLine.style.marginTop = "4px";
